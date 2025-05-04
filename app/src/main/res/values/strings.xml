@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ArtSpace</string>
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+    <string name="kvitka_title">Flower</string>
+    <string name="kvitka_desc">Maksym Oleksiienko (2025)</string>
+</resources>
