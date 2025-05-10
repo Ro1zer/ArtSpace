@@ -1,7 +1,6 @@
 package com.example.artspace
 
 import android.os.Bundle
-import android.widget.Space
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -17,7 +16,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +23,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -53,30 +55,74 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun ArtSpaceApp(modifier: Modifier = Modifier) {
+    var imageId by remember { mutableIntStateOf(R.drawable.kvitka) }
+    var titleId by remember { mutableIntStateOf(R.string.kvitka_title) }
+    var descId by remember { mutableIntStateOf(R.string.kvitka_desc) }
+    //TODO: Delete this magic numbers
+    var state = 0
+    var onStateUpdate = {
+        imageId = when (state) {
+            0 -> R.drawable.kvitka
+            1 -> R.drawable.house
+            2 -> R.drawable.street
+            3 -> R.drawable.street_2
+            4 -> R.drawable.skyview
+            5 -> R.drawable.skyview_2
+            else -> R.drawable.tree_and_view
+        }
+        titleId = when (state) {
+            0 -> R.string.kvitka_title
+            1 -> R.string.house_title
+            2 -> R.string.street_title
+            3 -> R.string.street2_title
+            4 -> R.string.skyview_title
+            5 -> R.string.skyview2_title
+            else -> R.string.tree_and_view_title
+        }
+        descId = when (state) {
+            0 -> R.string.kvitka_desc
+            1 -> R.string.house_desc
+            2 -> R.string.street_desc
+            3 -> R.string.street2_desc
+            4 -> R.string.skyview_desc
+            5 -> R.string.skyview2_desc
+            else -> R.string.tree_and_view_desc
+        }
+    }
     Surface(
         modifier = modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background,
     ) {
         Column(
-            modifier = modifier.padding(10.dp),
+            modifier = modifier,
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Bottom
         ) {
-            //TODO: Change this hard code!!!
             ArtImage(
-                id = R.drawable.kvitka,
-                modifier = Modifier.size(300.dp).clip(RoundedCornerShape(16.dp))
+                id = imageId,
+                modifier = Modifier
+                    .size(350.dp)
+                    .clip(RoundedCornerShape(16.dp))
             )
             Spacer(Modifier.height(20.dp))
             ArtDescription(
-                modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant).padding(10.dp),
-                titleId = R.string.kvitka_title,
-                descId = R.string.kvitka_desc
+                modifier = Modifier
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
+                    .padding(10.dp),
+                titleId = titleId,
+                descId = descId
             )
             Spacer(Modifier.height(20.dp))
+            //TODO: Delete this magic numbers
             ButtonsPanel(
-                onNext = {},
-                onPrevious = {}
+                onNext = {
+                    state = if (state > 5) 0 else state + 1
+                    onStateUpdate()
+                },
+                onPrevious = {
+                    state = if (state < 0) 5 else state - 1
+                    onStateUpdate()
+                }
             )
         }
     }
@@ -89,7 +135,7 @@ fun ArtImage(
 ) {
     Image(
         painter = painterResource(id),
-        contentDescription = painterResource(id).toString(),
+        contentDescription = null,
         contentScale = ContentScale.Crop,
         modifier = modifier
     )
@@ -127,7 +173,7 @@ fun ButtonsPanel(
     onNext: () -> Unit,
 ) {
     Row(
-        modifier = modifier,
+        modifier = modifier.padding(bottom = 15.dp, start = 10.dp, end = 10.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {

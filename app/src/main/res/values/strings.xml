@@ -4,4 +4,16 @@
     <string name="next">Next</string>
     <string name="kvitka_title">Flower</string>
     <string name="kvitka_desc">Maksym Oleksiienko (2025)</string>
+    <string name="house_title">Very fancy House</string>
+    <string name="house_desc">Maksym Oleksiienko (2025)</string>
+    <string name="street_title">Great Street</string>
+    <string name="street_desc">Maksym Oleksiienko (2025)</string>
+    <string name="street2_title">Another Great Street</string>
+    <string name="street2_desc">Maksym Oleksiienko (2025)</string>
+    <string name="skyview_title">Sky View</string>
+    <string name="skyview_desc">Maksym Oleksiienko (2025)</string>
+    <string name="skyview2_title">Another Sky View</string>
+    <string name="skyview2_desc">Maksym Oleksiienko (2025)</string>
+    <string name="tree_and_view_title">Tree and view</string>
+    <string name="tree_and_view_desc">Maksym Oleksiienko (2025)</string>
 </resources>
